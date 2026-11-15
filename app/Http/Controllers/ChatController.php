@@ -13,7 +13,9 @@ class ChatController extends Controller
 
     public function __construct()
     {
-        $this->openai = \OpenAI::client(env('OPENAI_API_KEY'));
+        $apiKey = config('services.openai.key');
+
+        $this->openai = $apiKey ? \OpenAI::client($apiKey) : null;
     }
 
     public function chat(Request $request)
@@ -78,6 +80,10 @@ class ChatController extends Controller
 
     private function getOpenAIResponse($message)
     {
+        if (! $this->openai) {
+            throw new \RuntimeException('OpenAI API key is not configured.');
+        }
+
         $systemPrompt = 'You are a CODE GENERATOR that responds ONLY with markdown code blocks.
 
 When asked for any webpage or code:

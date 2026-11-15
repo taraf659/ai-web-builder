@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Chat</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+        <header class="top-nav">
+            <a href="index.html">Login</a>
+            <a href="help.html">Help Center</a>
+            <a href="projects.html">Projects</a>
+            <a href="home.html">Home</a>
+          </header>
+
+  
+  <div class="chat-wrapper">
+    <div class="chat-box" id="chat-box"></div>
+
+    <div class="input-area">
+      <input type="text" id="message-input" placeholder="Type a message...">
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chat-box');
+    const input = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function addMessage(text, user = false) {
+      const msg = document.createElement('div');
+      msg.classList.add('message');
+      if (user) msg.classList.add('user');
+      msg.textContent = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (text === "") return;
+      addMessage(text, true);
+      input.value = "";
+
+      setTimeout(() => {
+        addMessage("AI response will appear here");
+      }, 500);
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
